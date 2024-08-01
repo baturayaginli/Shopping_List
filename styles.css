@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background: url('background-image-url.jpg') no-repeat center center fixed;
+    background: url('background-image-url.jpg') no-repeat center center fixed; /* Arka plan resmi için URL'yi değiştirin */
     background-size: cover;
     color: #333;
     margin: 0;
@@ -93,9 +93,8 @@ li button:hover {
 .ad {
     background-color: #eee;
     color: #aaa;
-    border: 1px dashed #ccc;
-    width: 100px;
-    height: 600px;
+    width: 160px; /* Reklam boyutunu buraya ekleyin */
+    height: 600px; /* Reklam boyutunu buraya ekleyin */
     display: flex;
     justify-content: center;
     align-items: center;
