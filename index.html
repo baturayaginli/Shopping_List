@@ -3,42 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shopping List</title>
+  <title>Shopping List Login</title>
   <link rel="stylesheet" href="styles.css">
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5041542557528622"
-     crossorigin="anonymous"></script>
 </head>
 <body>
   <div class="main-content">
-    <h1>Shopping List</h1>
-    <input type="text" id="itemInput" placeholder="Enter an item">
-    <input type="number" id="quantityInput" placeholder="Quantity">
-    <button id="addItemButton">Add Item</button>
-    <button id="logoutButton" style="display: none;">Logout</button>
-    <div id="shoppingList"></div>
-    <div class="auth-section">
-      <input type="text" id="username" placeholder="Username" style="display: none;">
-      <input type="email" id="email" placeholder="Email">
-      <input type="password" id="password" placeholder="Password">
-      <button id="loginButton">Login</button>
-      <button id="signUpButton">Sign Up</button>
-    </div>
+    <h1>Login</h1>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button id="loginButton">Login</button>
+    <button id="signUpButton">Sign Up</button>
   </div>
-  <!-- Google AdSense -->
-  <div style="text-align:center;">
-    <ins class="adsbygoogle"
-         style="display:inline-block;width:728px;height:90px"
-         data-ad-client="ca-pub-5041542557528622"
-         data-ad-slot="4712613770"></ins>
-    <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  </div>
-  <script src="script.js"></script>
+  <script src="login.js"></script>
 </body>
 </html>
