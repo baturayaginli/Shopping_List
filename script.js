@@ -1,75 +1,93 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const addItemButton = document.getElementById('add-item-button');
-    const itemInput = document.getElementById('item-input');
-    const quantityInput = document.getElementById('quantity-input');
-    const itemList = document.getElementById('item-list');
-    const logoutButton = document.getElementById('logout-button');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping List</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5041542557528622" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="main-content">
+        <h1>Shopping List</h1>
+        <input type="text" id="item" placeholder="Enter an item">
+        <input type="number" id="quantity" placeholder="Quantity">
+        <button id="addItem">Add Item</button>
+        <button id="logout">Logout</button>
+        <br><br>
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <button id="login">Login</button>
+        <button id="signup">Sign Up</button>
+    </div>
 
-    // Add item to the list and Firebase
-    addItemButton.addEventListener('click', function () {
-        addItem();
-    });
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDXIyvYPknlbvcCTU_xaJpQgZB-itO1Bk",
+            authDomain: "shopping-list-b750e.firebaseapp.com",
+            databaseURL: "https://shopping-list-b750e-default-rtdb.firebaseio.com/",
+            projectId: "shopping-list-b750e",
+            storageBucket: "shopping-list-b750e.appspot.com",
+            messagingSenderId: "950788819154",
+            appId: "1:950788819154:web:ccbbd6aaf1f4ebfe77450b",
+            measurementId: "G-HQ94RYMY53"
+        };
 
-    // Add item on Enter key press
-    itemInput.addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            addItem();
-        }
-    });
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
 
-    quantityInput.addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            addItem();
-        }
-    });
+        const database = firebase.database();
 
-    function addItem() {
-        const itemName = itemInput.value.trim();
-        const itemQuantity = quantityInput.value.trim();
+        document.getElementById('addItem').addEventListener('click', () => {
+            const item = document.getElementById('item').value;
+            const quantity = document.getElementById('quantity').value;
+            const userId = firebase.auth().currentUser.uid;
 
-        if (itemName && itemQuantity) {
-            const itemId = firebase.database().ref().child('items').push().key;
-            const itemData = {
-                name: itemName,
-                quantity: itemQuantity
-            };
-            const updates = {};
-            updates['/items/' + itemId] = itemData;
-            firebase.database().ref().update(updates);
-
-            itemInput.value = '';
-            quantityInput.value = '';
-        }
-    }
-
-    // Logout function
-    logoutButton.addEventListener('click', function () {
-        firebase.auth().signOut().then(() => {
-            console.log('User logged out');
-            window.location.reload();
-        }).catch((error) => {
-            console.error('Logout Error:', error);
+            if (item && quantity) {
+                firebase.database().ref('users/' + userId + '/shopping_list').push({
+                    item: item,
+                    quantity: quantity
+                });
+            }
         });
-    });
 
-    // Fetch items from Firebase and display
-    firebase.database().ref('items').on('value', function (snapshot) {
-        itemList.innerHTML = '';
-        snapshot.forEach(function (childSnapshot) {
-            const childData = childSnapshot.val();
-            const listItem = document.createElement('li');
-            listItem.textContent = `${childData.name} (${childData.quantity} adet)`;
-            itemList.appendChild(listItem);
+        document.getElementById('signup').addEventListener('click', () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    console.log('User signed up: ', userCredential.user);
+                })
+                .catch((error) => {
+                    console.error('Error signing up: ', error.message);
+                });
         });
-    });
 
-    // Authentication
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            console.log('User logged in:', user.email);
-        } else {
-            console.log('No user is signed in');
-            window.location.href = 'login.html'; // Redirect to login page if not logged in
-        }
-    });
-});
+        document.getElementById('login').addEventListener('click', () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    console.log('User logged in: ', userCredential.user);
+                })
+                .catch((error) => {
+                    console.error('Error logging in: ', error.message);
+                });
+        });
+
+        document.getElementById('logout').addEventListener('click', () => {
+            firebase.auth().signOut().then(() => {
+                console.log('User logged out');
+            }).catch((error) => {
+                console.error('Error logging out: ', error.message);
+            });
+        });
+    </script>
+</body>
+</html>
