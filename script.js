@@ -2,7 +2,7 @@
 var firebaseConfig = {
     apiKey: "AIzaSyCDXIyvYPknlbvcCTU_xaJpQgZB-itO1Bk",
     authDomain: "shopping-list-b750e.firebaseapp.com",
-    databaseURL: "https://shopping-list-b750e.firebaseio.com",
+    databaseURL: "https://shopping-list-b750e.firebaseio.com", // URL'yi kontrol edin
     projectId: "shopping-list-b750e",
     storageBucket: "shopping-list-b750e.appspot.com",
     messagingSenderId: "950788819154",
